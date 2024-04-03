@@ -2,7 +2,7 @@
 import React from "react";
 import Image from 'next/image'
 import LogoClouds from "@/components/ui/logo-clouds";
-import FeaturedSection from "@/components/ui/featured-section";
+import Testimonial from "@/components/ui/testimonial";
 
 import { navItems } from '@/site.config';
 
@@ -70,12 +70,12 @@ export default function Home() {
               <div className="relative z-10 lg:py-16">
                 <div className="relative h-64 sm:h-80 lg:h-full">
                   <Image
-                    width={1770}
+                    width={390}
                     height="0"
                     alt=""
-                    src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    style={{ width: '100%', height: '100%' }}
+                    src="https://relentlessbetrayal.com/cdn/shop/files/DSC00195_1024x1024@2x.jpg"
+                    className="absolute inset-0 h-full w-full object-none"
+                    style={{ height: '100%', width: '100%' }}
                   />
                 </div>
               </div>
@@ -95,7 +95,7 @@ export default function Home() {
                   </p>
 
                   <a
-                    href="#"
+                    href="techwear"
                     className="mt-8 inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
                   >
                     ir a la colección
@@ -164,11 +164,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-gray-200">
-        <FeaturedSection />
-      </div>
-
       <LogoClouds />
+
     </main>
   );
 }
