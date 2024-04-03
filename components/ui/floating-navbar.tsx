@@ -17,8 +17,12 @@ import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/
 import Image from 'next/image'
 import { describe } from 'node:test';
 import { div, sub } from 'three/examples/jsm/nodes/Nodes.js';
+import { Button } from "@/components/ui/button"
+
 
 import { navItems } from '@/site.config';
+
+import Cart from './slide-over-cart';
 
 const callsToAction = [
     { name: 'Instagram', href: '#', icon: CheckBadgeIcon },
@@ -31,12 +35,18 @@ function classNames(...classes: any[]) {
 
 export default function FloatingNav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [isCartVisible, setCartVisible] = useState(false);
+
+    const handleCartClick = () => {
+        setCartVisible(true);
+        console.log("Cart visible: ", isCartVisible);
+    };
 
     return (
         <header className="bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">The Hype Company</span>
                         <Image src="/vercel.svg" alt="" width={44} height={34} />
                     </a>
@@ -125,9 +135,13 @@ export default function FloatingNav() {
 
                 </Popover.Group>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="carrito" className="text-sm font-semibold leading-6 text-gray-900">
+                    {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900" >
+                    </a> */}
+                    <Button variant="ghost" size="icon" onClick={handleCartClick}>
                         <ShoppingCartIcon className="h-6 w-6 text-gray-500" />
-                    </a>
+                        {isCartVisible && <Cart />}
+                    </Button>
+
 
                 </div>
             </nav>
