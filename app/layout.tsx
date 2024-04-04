@@ -4,6 +4,7 @@ import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 
 import FloatingNav from "@/components/ui/floating-navbar";
+import Footer from "@/components/ui/footer";
 import { IconHome, IconHanger, IconShoe, IconHandStop, IconDiamond } from "@tabler/icons-react";
 
 
@@ -25,7 +26,9 @@ export default function RootLayout({
         )}
       >
         <FloatingNav />
-        {children}</body>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

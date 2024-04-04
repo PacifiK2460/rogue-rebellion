@@ -17,109 +17,17 @@ import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/
 import Image from 'next/image'
 import { describe } from 'node:test';
 import { div, sub } from 'three/examples/jsm/nodes/Nodes.js';
+import { Button } from "@/components/ui/button"
+
+
+import { navItems } from '@/site.config';
+
+import Cart from './slide-over-cart';
+
 const callsToAction = [
     { name: 'Instagram', href: '#', icon: CheckBadgeIcon },
     { name: 'Contactanos', href: '#', icon: PhoneIcon },
 ]
-
-const navItems = [
-    {
-        "name": "Techwear",
-        "link": "/techwear",
-        "subItems": [
-            {
-                "name": "Pants",
-                "description": "Nuestros pantalones techwear están diseñados para el urbanita moderno, con materiales duraderos y resistentes al agua y un ajuste elegante y aerodinámico.",
-                "link": "/pants"
-            },
-            {
-                "name": "Jackets",
-                "description": "Mantente cálido y con estilo con nuestras chaquetas techwear, equipadas con múltiples bolsillos para funcionalidad y diseñadas con una estética futurista.",
-                "link": "/jackets"
-            },
-            {
-                "name": "Hoodies",
-                "description": "Nuestras sudaderas con capucha techwear combinan comodidad y estilo, con diseños únicos y telas de alta tecnología para una calidez y durabilidad óptimas.",
-                "link": "/hoodies"
-            },
-            {
-                "name": "Vest",
-                "description": "Los chalecos techwear de The Hype Company son ligeros y versátiles, perfectos para usar en capas o por sí solos.",
-                "link": "/vest"
-            },
-            {
-                "name": "Shirts",
-                "description": "Nuestras camisas techwear son transpirables y de secado rápido, diseñadas tanto para el uso activo como casual.",
-                "link": "/shirts"
-            },
-            {
-                "name": "Shorts",
-                "description": "Mantente fresco y cómodo con nuestros pantalones cortos techwear, con cinturas ajustables y amplio espacio en los bolsillos.",
-                "link": "/shorts"
-            }
-        ]
-    },
-    {
-        "name": "Footwear",
-        "link": "/footwear",
-        "subItems": [
-            {
-                "name": "Boots",
-                "description": "Nuestras botas son robustas y duraderas, diseñadas para resistir cualquier clima mientras te mantienen con estilo.",
-                "link": "/boots"
-            },
-            {
-                "name": "Sneakers",
-                "description": "Las zapatillas de deporte de The Hype Company son la combinación perfecta de comodidad y estilo, con diseños innovadores y materiales de alta calidad.",
-                "link": "/sneakers"
-            }
-        ]
-    },
-    {
-        "name": "Headwear",
-        "link": "/headwear",
-        "subItems": [
-            {
-                "name": "Caps",
-                "description": "Nuestras gorras están diseñadas con un toque moderno, perfectas para agregar un toque de estilo streetwear a cualquier atuendo.",
-                "link": "/caps"
-            },
-            {
-                "name": "Beanies",
-                "description": "Mantente cálido y con estilo con nuestros gorros, hechos de materiales suaves y cómodos y disponibles en una variedad de colores.",
-                "link": "/beanies"
-            }
-        ]
-    },
-    {
-        "name": "Jewelry",
-        "link": "/jewelry",
-        "subItems": [
-            {
-                "name": "Pants Chains",
-                "description": "Agrega un toque vanguardista a tu atuendo con nuestras cadenas para pantalones, hechas de metales de alta calidad.",
-                "link": "/pantschains"
-            },
-            {
-                "name": "Necklaces",
-                "description": "Nuestros collares son el accesorio perfecto para completar tu look streetwear, con diseños únicos y llamativos.",
-                "link": "/necklaces"
-            },
-            {
-                "name": "Bracelets",
-                "description": "Agrega un toque de sofisticación a tu atuendo con nuestras pulseras, diseñadas con materiales de alta calidad y detalles intrincados.",
-                "link": "/bracelets"
-            },
-            {
-                "name": "Rings",
-                "description": "Nuestros anillos son una pieza de declaración audaz, elaborados con atención al detalle y diseñados para destacar.",
-                "link": "/rings"
-            }
-        ]
-    }
-
-];
-
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
@@ -127,12 +35,18 @@ function classNames(...classes: any[]) {
 
 export default function FloatingNav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [isCartVisible, setCartVisible] = useState(false);
+
+    const handleCartClick = () => {
+        setCartVisible(true);
+        console.log("Cart visible: ", isCartVisible);
+    };
 
     return (
         <header className="bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">The Hype Company</span>
                         <Image src="/vercel.svg" alt="" width={44} height={34} />
                     </a>
@@ -167,6 +81,19 @@ export default function FloatingNav() {
                                 >
                                     <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-lg overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                                         <div className="p-4">
+                                            <div
+                                                className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                                            >
+                                                {/* <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                                        <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                                                    </div> */}
+                                                <div className="flex-auto">
+                                                    <a href={item.link} className="block font-semibold text-gray-900">
+                                                        {item.name}
+                                                        <span className="absolute inset-0" />
+                                                    </a>
+                                                </div>
+                                            </div>
                                             {item.subItems?.map((subitem) => (
                                                 <div
                                                     key={subitem.name}
@@ -176,7 +103,7 @@ export default function FloatingNav() {
                                                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                                                     </div> */}
                                                     <div className="flex-auto">
-                                                        <a href={subitem.link} className="block font-semibold text-gray-900">
+                                                        <a href={item.link + subitem.link} className="block font-semibold text-gray-900">
                                                             {subitem.name}
                                                             <span className="absolute inset-0" />
                                                         </a>
@@ -208,10 +135,13 @@ export default function FloatingNav() {
 
                 </Popover.Group>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                        Log in <span aria-hidden="true">&rarr;</span>
+                    {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900" >
                     </a> */}
-                    <ShoppingCartIcon className="h-6 w-6 text-gray-500" />
+                    <Button variant="ghost" size="icon" onClick={handleCartClick}>
+                        <ShoppingCartIcon className="h-6 w-6 text-gray-500" />
+                        {isCartVisible && <Cart />}
+                    </Button>
+
 
                 </div>
             </nav>
