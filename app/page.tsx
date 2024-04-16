@@ -1,8 +1,7 @@
-"use client";
 import React from "react";
 import Image from 'next/image'
 import LogoClouds from "@/components/ui/logo-clouds";
-import Testimonial from "@/components/ui/testimonial";
+// import Testimonial from "@/components/ui/testimonial";
 
 import { navItems } from '@/site.config';
 
@@ -71,7 +70,7 @@ export default function Home() {
                 <div className="relative h-64 sm:h-80 lg:h-full">
                   <Image
                     width={390}
-                    height="0"
+                    height={0}
                     alt=""
                     src="https://relentlessbetrayal.com/cdn/shop/files/DSC00195_1024x1024@2x.jpg"
                     className="absolute inset-0 h-full w-full object-none"
