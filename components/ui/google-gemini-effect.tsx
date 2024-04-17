@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
 import React from "react";

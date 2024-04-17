@@ -1,9 +1,21 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Cart as cart } from "@/types/product"
 
-export default function Cart() {
-  const [open, setOpen] = useState(true)
+import { Skeleton } from "@/components/ui/skeleton"
+import Image from 'next/image'
+import { Button } from "@/components/ui/button"
+
+import { Separator } from "@/components/ui/separator"
+
+export default function Cart({
+  open,
+  setOpen,
+}: {
+  open: boolean
+  setOpen: (open: boolean) => void
+}) {
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -49,7 +61,7 @@ export default function Cart() {
                         onClick={() => setOpen(false)}
                       >
                         <span className="absolute -inset-2.5" />
-                        <span className="sr-only">Close panel</span>
+                        <span className="sr-only">Cerrar Carrito</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
@@ -57,10 +69,88 @@ export default function Cart() {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        Panel title
+                        Carrito
                       </Dialog.Title>
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">{/* Your content */}</div>
+                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                      {
+                        Cart.length === 0 ? (
+                          <div className="flex items-center justify-center h-full">
+                            <p className="text-sm text-gray-500">
+                              Tu carrito está vacío.
+                            </p>
+                          </div>
+                        ) : (
+                          <div>
+                            <ul className="divide-y divide-gray-200">
+                              {cart.map((item) => (
+                                <li key={item.id} className="py-4 flex">
+                                  <Skeleton className="w-24 h-24" />
+                                  <Image
+                                    width={24}
+                                    height={24}
+                                    alt={item.name}
+                                    src={"/" + item.image}
+                                    onError={
+                                      (e) => {
+                                        console.log(e)
+                                      }
+                                    }
+                                  />
+                                  <div className="ml-4 flex-1 flex flex-col">
+                                    <div>
+                                      <div className="flex justify-between">
+                                        <h3 className="text-sm font-semibold text-gray-900">
+                                          {item.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-500">
+                                          ${item.price}
+                                        </p>
+                                      </div>
+                                      <p className="mt-1 text-sm text-gray-500">
+                                        {item.brand}
+                                      </p>
+                                    </div>
+                                    <div className="flex-1 flex items-end justify-between">
+                                      <p className="text-sm text-gray-500">
+                                        {item.type} / {item.subtype}
+                                      </p>
+                                      <Button
+                                        variant="destructive"
+                                        className="font-semibold "
+                                      >
+                                        Eliminar
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                            <Separator />
+
+                            <div className="flex justify-between px-4 sm:px-6 py-4">
+                              <p className="text-sm text-gray-500">
+                                Total
+                              </p>
+                              <p className="text-sm text-gray-900">
+                                ${cart.reduce((acc, item) => acc + item.price, 0)} USD
+                              </p>
+                            </div>
+
+
+                            <div className="py-4">
+                              <Button
+                                variant="default"
+                                className="w-full"
+                              >
+                                Comprar
+                              </Button>
+                            </div>
+
+                          </div>
+                        )
+                      }
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

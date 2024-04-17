@@ -1,5 +1,4 @@
 "use client";
-
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
@@ -139,7 +138,7 @@ export default function FloatingNav() {
                     </a> */}
                     <Button variant="ghost" size="icon" onClick={handleCartClick}>
                         <ShoppingCartIcon className="h-6 w-6 text-gray-500" />
-                        {isCartVisible && <Cart />}
+                        <Cart open={isCartVisible} setOpen={setCartVisible} />
                     </Button>
 
 
