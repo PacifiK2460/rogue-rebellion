@@ -1,14 +1,15 @@
-import { Fragment } from 'react'
+"use client";
+
+import { Fragment, useEffect, useState } from 'react'
+
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-// import { Cart as cart } from "@/types/product"
-
-import { Skeleton } from "@/components/ui/skeleton"
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 
 import { Separator } from "@/components/ui/separator"
-import { Cart as CartHandler } from '@/types/product'
+import { CartItem } from '@/types/product'
+
 
 export default function Cart({
   open,
@@ -18,7 +19,73 @@ export default function Cart({
   setOpen: (open: boolean) => void
 }) {
 
-  const cart = new CartHandler();
+  const [total, setTotal] = useState(0);
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const addToCart = (product: CartItem) => {
+    let items = cart;
+
+    let existingItem = items.find(
+      (cartItem: { name: string }) => cartItem.name === product.name
+    );
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      items.push({ ...product, quantity: 1 });
+    }
+
+    // Store the updated cart in localStorage
+    localStorage.setItem("cart", JSON.stringify(items));
+
+    setCart([...items]);
+  }
+
+  const decrementQuantity = (product: CartItem) => {
+    let items = cart;
+
+    let existingItem = items.find(
+      (cartItem: { name: string }) => cartItem.name === product.name
+    );
+
+    if (existingItem) {
+      existingItem.quantity -= 1;
+    }
+
+    // Remove the item from the cart if the quantity is 0
+    items = items.filter((item: CartItem) => item.quantity > 0);
+
+    // Store the updated cart in localStorage
+    localStorage.setItem("cart", JSON.stringify(items));
+
+    setCart([...items]);
+  }
+
+  const removeFromCart = (product: CartItem) => {
+    let items = cart;
+
+    items = items.filter(
+      (cartItem: { name: string }) => cartItem.name !== product.name
+    );
+
+    // Store the updated cart in localStorage
+    localStorage.setItem("cart", JSON.stringify(items));
+
+    setCart([...items]);
+  }
+
+  useEffect(() => {
+    const __cart = localStorage.getItem("cart");
+    const _cart = JSON.parse(__cart || "[]");
+    setCart(_cart);
+
+    // Calculate the total
+    let _total = 0;
+    _cart.forEach((item: CartItem) => {
+      _total += item.price * item.quantity;
+    });
+    setTotal(_total);
+  }, [cart])
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -77,7 +144,7 @@ export default function Cart({
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
                       {
-                        cart.getCart().length === 0 ? (
+                        cart.length === 0 ? (
                           <div className="flex items-center justify-center h-full">
                             <p className="text-sm text-gray-500">
                               Tu carrito está vacío.
@@ -86,19 +153,19 @@ export default function Cart({
                         ) : (
                           <div>
                             <ul className="divide-y divide-gray-200">
-                              {cart.getCart().map((item) => (
+                              {cart.map((item: CartItem) => (
                                 <li key={item.id} className="py-4 flex">
-                                  {/* <Skeleton className="w-24 h-24" /> */}
                                   <Image
-                                    width={24}
+                                    width={120}
                                     height={24}
                                     alt={item.name}
-                                    src={"/" + item.image}
+                                    src={item.images[0]}
                                     onError={
                                       (e) => {
-                                        console.log(e)
+                                        console.log("Error: " + e)
                                       }
                                     }
+                                    
                                   />
                                   <div className="ml-4 flex-1 flex flex-col">
                                     <div>
@@ -110,14 +177,14 @@ export default function Cart({
                                           ${item.price}
                                         </p>
                                         <div className="flex flex-row align-middle">
-                                          <Button variant="ghost" onClick={() => { cart.addToCart(item) }}>
+                                          <Button variant="ghost" onClick={() => { addToCart(item) }}>
                                             +
                                           </Button>
                                           {/* Center Vertically */}
                                           <p className="text-sm text-gray-500 text-center">
                                             {item.quantity}
                                           </p>
-                                          <Button variant="ghost" onClick={() => { cart.removeFromCart(item) }}>
+                                          <Button variant="ghost" onClick={() => { decrementQuantity(item) }}>
                                             -
                                           </Button>
                                         </div>
@@ -133,6 +200,7 @@ export default function Cart({
                                       <Button
                                         variant="destructive"
                                         className="font-semibold "
+                                        onClick={() => { removeFromCart(item) }}
                                       >
                                         Eliminar
                                       </Button>
@@ -148,7 +216,7 @@ export default function Cart({
                                 Total
                               </p>
                               <p className="text-sm text-gray-900">
-                                ${cart.getCart().reduce((acc, item) => acc + item.price * item.quantity, 0)}
+                                ${total}
                               </p>
                             </div>
 
@@ -157,6 +225,10 @@ export default function Cart({
                               <Button
                                 variant="default"
                                 className="w-full"
+                                onClick={() => {
+                                  // Redirect to the checkout page
+                                  window.location.href = "/checkout";
+                                }}
                               >
                                 Comprar
                               </Button>
@@ -166,6 +238,8 @@ export default function Cart({
                         )
                       }
                     </div>
+
+
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

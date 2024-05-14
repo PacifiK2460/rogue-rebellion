@@ -14,6 +14,7 @@
     "@nextui-org/image": "^2.0.25",
     "@nextui-org/system": "^2.1.0",
     "@nextui-org/theme": "^2.2.0",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
@@ -32,7 +33,8 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.163.0"
+    "three": "^0.163.0",
+    "vaul": "^0.9.1"
   },
   "devDependencies": {
     "@types/node": "^20",

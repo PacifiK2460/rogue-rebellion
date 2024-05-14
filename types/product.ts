@@ -1,10 +1,4 @@
-// Define product type
-"use client";
-
 import { useLocalStorage } from "@/lib/storage";
-import { parse } from "node-html-parser";
-import axios from "axios";
-import cheerio from "cheerio";
 
 export type Product = {
   id: number;
@@ -21,142 +15,61 @@ export type CartItem = Product & {
 };
 
 export class Cart {
-  private items: CartItem[];
+  public static addToCart(item: Product) {
+    let items = Cart.getCart();
 
-  public addToCart(item: Product) {
-    let existingItem = this.items.find(
-      (cartItem) => cartItem.name === item.name
+    let existingItem = items.find(
+      (cartItem: { name: string }) => cartItem.name === item.name
     );
 
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
-      this.items.push({ ...item, quantity: 1 });
+      items.push({ ...item, quantity: 1 });
     }
 
     // Store the updated cart in localStorage
-    localStorage.setItem("cart", JSON.stringify(Cart));
+    localStorage.setItem("cart", JSON.stringify(items));
   }
 
-  public removeFromCart(item: Product) {
-    let existingItem = this.items.find(
-      (cartItem) => cartItem.name === item.name
+  public static getCart() {
+    // load from localStorage
+
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+      return JSON.parse(cart);
+    } else {
+      return [];
+    }
+  }
+
+  public static removeFromCart(item: Product) {
+    let items = Cart.getCart();
+
+    let existingItem = items.find(
+      (cartItem: { name: string }) => cartItem.name === item.name
     );
 
     if (existingItem) {
       // Remove the item from the cart
-      this.items = this.items.filter((cartItem) => cartItem.name !== item.name);
+      if (existingItem.quantity > 1) {
+        existingItem.quantity -= 1;
+      } else {
+        items = items.filter(
+          (cartItem: { name: string }) => cartItem.name !== item.name
+        );
+      }
     }
 
     // Store the updated cart in localStorage
     localStorage.setItem("cart", JSON.stringify(Cart));
   }
 
-  public getCart() {
-    return this.items;
-  }
-
-  public clearCart() {
-    this.items = [];
+  public static clearCart() {
+    let items = [];
     localStorage.setItem("cart", JSON.stringify(Cart));
   }
-
-  constructor() {
-    // this.items = JSON.parse(localStorage.getItem("cart") || "[]");
-    this.items = [];
-  }
-
-  // public static async getNikeProducts(type: string) {
-  //   console.log("Fetching products from Nike");
-  //   // const response = await fetch(`https://www.nike.com/mx/w?q=${type}`);
-  //   const { data } = await axios.get(`https://www.nike.com/mx/w?q=${type}`);
-
-  //   const $ = cheerio.load(data);
-  //   const _products: Product[] = [];
-
-  //   // The list is inside a div with the class: "product-grid css-1hl0l1w", we need to get that from "body"
-  //   $(".product-card__body").each(async (index, element) => {
-  //     let new_product: Product = {
-  //       name: "",
-  //       price: 0,
-  //       brand: "Nike",
-  //       type: "Techwear",
-  //       subtype: type,
-  //       images: [],
-  //     };
-
-  //     new_product.name = $(element).find(".product-card__title").text();
-  //     new_product.price = parseInt(
-  //       $(element)
-  //         .find(".product-price")
-  //         .text()
-  //         .replace("$", "")
-  //         .replace(",", "")
-  //     );
-
-  //     // Get link to product
-  //     const productLink = $(element)
-  //       .find(".product-card__link-overlay")
-  //       .attr("href");
-  //     console.log(productLink);
-
-  //     if (!productLink) return;
-
-  //     // Go to the link to get the images
-  //     const productResponse = await axios.get(productLink);
-  //     const productData = productResponse.data;
-
-  //     // Get the images contaienr
-  //     const $$ = cheerio.load(productData);
-  //     const imagesContainer = $$("div.product-card__media-container");
-  //     const imageDivs = imagesContainer.children();
-
-  //     // Get the images
-  //     imageDivs.toArray().forEach((imageDiv) => {
-  //       const image = $(imageDiv).find("img").attr("src");
-  //       console.log("Image: ", image);
-  //       return;
-  //       new_product.images.push(image || "");
-  //     });
-
-  //     // The images are inside a img tag, we need to get the src attribute
-  //     $(element)
-  //       .find("img")
-  //       .each((index, element) => {
-  //         new_product.images.push($(element).attr("src") || "");
-  //       });
-
-  //     _products.push(new_product);
-  //   });
-
-  //   // console.log(_products);
-
-  //   return;
-  // }
 }
-
-/* For Porpuse of this example, we will use a static list of products
-    the type will be from: 
-
-    - Techwear:
-        - Pants
-        - Jackets
-        - Hoodies
-        - Vest
-        - Shirts
-        - Shorts
-    - Footwear:
-        - Boots
-        - Sneakers
-    - Headwear:
-        - Caps
-        - Beanies
-    - Jewelry:
-        - Pants Chains
-        - Necklaces
-        - Rings
-        - Bracelets
-*/
 
 export const products: Product[] = [
   {

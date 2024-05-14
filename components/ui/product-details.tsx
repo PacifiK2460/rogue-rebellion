@@ -61,12 +61,15 @@ function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-import { Product, addToCart, removeFromCart } from '@/types/product';
+import { Product, Cart } from '@/types/product';
 import { brands } from '@/types/brands';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 export default function ProductDetails({ product }: { product: Product }) {
+
+    // Set page title
+    document.title = product.name;
 
     const [selectedColor, setSelectedColor] = useState(_product.colors[0])
     const [selectedSize, setSelectedSize] = useState(_product.sizes[2])
@@ -292,7 +295,7 @@ export default function ProductDetails({ product }: { product: Product }) {
                                 variant="default"
                                 // className="w-full"
                                 onClick={() => {
-                                    addToCart(product);
+                                    Cart.addToCart(product);
                                 }}
                             >
                                 Añadir al Carrito
