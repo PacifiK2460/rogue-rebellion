@@ -1,13 +1,14 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Cart as cart } from "@/types/product"
+// import { Cart as cart } from "@/types/product"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 
 import { Separator } from "@/components/ui/separator"
+import { Cart as CartHandler } from '@/types/product'
 
 export default function Cart({
   open,
@@ -16,6 +17,8 @@ export default function Cart({
   open: boolean
   setOpen: (open: boolean) => void
 }) {
+
+  const cart = new CartHandler();
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -74,7 +77,7 @@ export default function Cart({
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
                       {
-                        Cart.length === 0 ? (
+                        cart.getCart().length === 0 ? (
                           <div className="flex items-center justify-center h-full">
                             <p className="text-sm text-gray-500">
                               Tu carrito está vacío.
@@ -83,9 +86,9 @@ export default function Cart({
                         ) : (
                           <div>
                             <ul className="divide-y divide-gray-200">
-                              {cart.map((item) => (
+                              {cart.getCart().map((item) => (
                                 <li key={item.id} className="py-4 flex">
-                                  <Skeleton className="w-24 h-24" />
+                                  {/* <Skeleton className="w-24 h-24" /> */}
                                   <Image
                                     width={24}
                                     height={24}
@@ -106,6 +109,18 @@ export default function Cart({
                                         <p className="text-sm text-gray-500">
                                           ${item.price}
                                         </p>
+                                        <div className="flex flex-row align-middle">
+                                          <Button variant="ghost" onClick={() => { cart.addToCart(item) }}>
+                                            +
+                                          </Button>
+                                          {/* Center Vertically */}
+                                          <p className="text-sm text-gray-500 text-center">
+                                            {item.quantity}
+                                          </p>
+                                          <Button variant="ghost" onClick={() => { cart.removeFromCart(item) }}>
+                                            -
+                                          </Button>
+                                        </div>
                                       </div>
                                       <p className="mt-1 text-sm text-gray-500">
                                         {item.brand}
@@ -133,7 +148,7 @@ export default function Cart({
                                 Total
                               </p>
                               <p className="text-sm text-gray-900">
-                                ${cart.reduce((acc, item) => acc + item.price, 0)} USD
+                                ${cart.getCart().reduce((acc, item) => acc + item.price * item.quantity, 0)}
                               </p>
                             </div>
 

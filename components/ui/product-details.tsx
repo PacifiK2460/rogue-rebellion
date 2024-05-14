@@ -61,13 +61,18 @@ function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-import { Product } from '@/types/product';
+import { Product, addToCart, removeFromCart } from '@/types/product';
+import { brands } from '@/types/brands';
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 export default function ProductDetails({ product }: { product: Product }) {
 
     const [selectedColor, setSelectedColor] = useState(_product.colors[0])
     const [selectedSize, setSelectedSize] = useState(_product.sizes[2])
+
+    const brand = brands.find((brand) => brand.name === product.brand) || brands[0];
+    const brandLogo = brand?.logoURL || '';
 
     return (
         <div className="bg-white">
@@ -105,8 +110,8 @@ export default function ProductDetails({ product }: { product: Product }) {
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                     <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                         <Image
-                            src={_product.images[0].src}
-                            alt={_product.images[0].alt}
+                            src={product.images[0]}
+                            alt={product.name}
                             className="h-full w-full object-cover object-center"
                             width={500}
                             height={500}
@@ -115,8 +120,8 @@ export default function ProductDetails({ product }: { product: Product }) {
                     <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
                         <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                             <Image
-                                src={_product.images[1].src}
-                                alt={_product.images[1].alt}
+                                src={product.images[1]}
+                                alt={product.name}
                                 className="h-full w-full object-cover object-center"
                                 width={500}
                                 height={500}
@@ -124,8 +129,8 @@ export default function ProductDetails({ product }: { product: Product }) {
                         </div>
                         <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                             <Image
-                                src={_product.images[2].src}
-                                alt={_product.images[2].alt}
+                                src={product.images[2]}
+                                alt={product.name}
                                 className="h-full w-full object-cover object-center"
                                 width={500}
                                 height={500}
@@ -134,8 +139,8 @@ export default function ProductDetails({ product }: { product: Product }) {
                     </div>
                     <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
                         <Image
-                            src={_product.images[3].src}
-                            alt={_product.images[3].alt}
+                            src={product.images[3]}
+                            alt={product.name}
                             className="h-full w-full object-cover object-center"
                             width={500}
                             height={500}
@@ -276,12 +281,22 @@ export default function ProductDetails({ product }: { product: Product }) {
                                 </RadioGroup>
                             </div>
 
-                            <button
+                            {/* <button
                                 type="submit"
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 Añadir al Carrito
-                            </button>
+                            </button> */}
+                            <Button
+                                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                variant="default"
+                                // className="w-full"
+                                onClick={() => {
+                                    addToCart(product);
+                                }}
+                            >
+                                Añadir al Carrito
+                            </Button>
                         </form>
                     </div>
 
@@ -290,9 +305,17 @@ export default function ProductDetails({ product }: { product: Product }) {
                         <div>
                             <h3 className="sr-only">Descrioción</h3>
 
-                            <div className="space-y-6">
+                            {/* <div className="space-y-6">
                                 <p className="text-base text-gray-900">{product.brand}</p>
-                            </div>
+                            </div> */}
+                            {/* Product Brand Logo */}
+                            <Image
+                                src={brandLogo}
+                                alt={product.name}
+                                className=" object-cover object-center"
+                                width={200}
+                                height={200}
+                            />
                         </div>
 
                         <div className="mt-10">

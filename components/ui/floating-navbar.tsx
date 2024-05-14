@@ -87,7 +87,7 @@ export default function FloatingNav() {
                                                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                                                     </div> */}
                                                 <div className="flex-auto">
-                                                    <a href={item.link} className="block font-semibold text-gray-900">
+                                                    <a href={"/store/type" + item.link} className="block font-semibold text-gray-900">
                                                         {item.name}
                                                         <span className="absolute inset-0" />
                                                     </a>
@@ -102,7 +102,7 @@ export default function FloatingNav() {
                                                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                                                     </div> */}
                                                     <div className="flex-auto">
-                                                        <a href={item.link + subitem.link} className="block font-semibold text-gray-900">
+                                                        <a href={"/store/type" + item.link + subitem.link} className="block font-semibold text-gray-900">
                                                             {subitem.name}
                                                             <span className="absolute inset-0" />
                                                         </a>

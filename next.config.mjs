@@ -11,7 +11,10 @@ const nextConfig = {
                 hostname: 'images.unsplash.com',
             },
             {
-                hostname: "tailwindui.com"
+                hostname: "tailwindui.com",
+            },
+            {
+                hostname: "static.nike.com",    
             }
         ]
     }

@@ -8,7 +8,7 @@ import { navItems } from '@/site.config';
 export default function Home() {
   const stats = [
     { name: 'Distribuidores', value: '33' },
-    { name: 'Numero de Tienas', value: '150+' },
+    { name: 'Numero de Tiendas', value: '150+' },
     { name: 'Satisfacción del Cliente', value: '100%' },
     { name: 'Estilo', value: 'Unlimited' },
   ]

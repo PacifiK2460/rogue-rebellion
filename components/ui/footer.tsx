@@ -37,7 +37,10 @@ export default function Footer() {
                             <span className="text-xs uppercase tracking-wide text-gray-500"> LLamanos </span>
 
                             <a href="#" className="block text-2xl font-medium text-gray-900 hover:opacity-75 sm:text-3xl">
-                                0123456789
+                                +52 486 113 22 43
+                            </a>
+                            <a href="#" className="block text-2xl font-medium text-gray-900 hover:opacity-75 sm:text-3xl">
+                                177194@upslp.edu.mx
                             </a>
                         </p>
 
@@ -49,7 +52,7 @@ export default function Footer() {
                         <ul className="mt-8 flex gap-6">
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://www.instagram.com/hype_company2024"
                                     rel="noreferrer"
                                     target="_blank"
                                     className="text-gray-700 transition hover:opacity-75"
@@ -68,7 +71,7 @@ export default function Footer() {
 
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://www.instagram.com/hype_company2024"
                                     rel="noreferrer"
                                     target="_blank"
                                     className="text-gray-700 transition hover:opacity-75"
@@ -87,7 +90,7 @@ export default function Footer() {
 
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://www.instagram.com/hype_company2024"
                                     rel="noreferrer"
                                     target="_blank"
                                     className="text-gray-700 transition hover:opacity-75"
