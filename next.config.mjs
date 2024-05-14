@@ -9,6 +9,12 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'images.unsplash.com',
+            },
+            {
+                hostname: "tailwindui.com",
+            },
+            {
+                hostname: "static.nike.com",    
             }
         ]
     }
