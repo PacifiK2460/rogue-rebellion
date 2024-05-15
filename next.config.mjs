@@ -15,6 +15,12 @@ const nextConfig = {
             },
             {
                 hostname: "static.nike.com",    
+            },
+            {
+                hostname: "assets.adidas.com"
+            },
+            {
+                hostname: "img.hollisterco.com"
             }
         ]
     }
