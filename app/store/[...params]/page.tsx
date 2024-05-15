@@ -5,13 +5,8 @@ import { Product } from '@/types/product';
 import { navItems } from '@/site.config';
 import { Brand, brands, StoreInfo } from '@/types/brands';
 import { redirect } from "next/navigation"
-
-
 import StoreHeader from '@/components/ui/store-header';
 import ProductList from '@/components/ui/product-list';
-
-import { Cart } from '@/types/product';
-
 
 function getProductsByParams(params: string[]): [Product[], StoreInfo] | [null, null] {
     let Products: Product[] = products;

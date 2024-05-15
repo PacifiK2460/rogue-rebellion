@@ -61,12 +61,34 @@ function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-import { Product, Cart } from '@/types/product';
+import { Product } from '@/types/product';
 import { brands } from '@/types/brands';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
+import { CartItem } from '@/types/product'
+
 export default function ProductDetails({ product }: { product: Product }) {
+    const [cart, setCart] = useState<CartItem[]>([]);
+
+    const addToCart = (product: Product) => {
+        let items = cart;
+
+        let existingItem = items.find(
+            (cartItem: { name: string }) => cartItem.name === product.name
+        );
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            items.push({ ...product, quantity: 1 });
+        }
+
+        // Store the updated cart in localStorage
+        localStorage.setItem("cart", JSON.stringify(items));
+
+        setCart([...items]);
+    }
 
     // Set page title
     document.title = product.name;
@@ -295,7 +317,7 @@ export default function ProductDetails({ product }: { product: Product }) {
                                 variant="default"
                                 // className="w-full"
                                 onClick={() => {
-                                    Cart.addToCart(product);
+                                    addToCart(product);
                                 }}
                             >
                                 Añadir al Carrito

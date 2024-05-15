@@ -24,8 +24,8 @@ import { navItems } from '@/site.config';
 import Cart from './slide-over-cart';
 
 const callsToAction = [
-    { name: 'Instagram', href: '#', icon: CheckBadgeIcon },
-    { name: 'Contactanos', href: '#', icon: PhoneIcon },
+    { name: 'Instagram', href: 'https://www.instagram.com/hype_company2024', icon: CheckBadgeIcon },
+    { name: 'Contactanos', href: "teL:+52 486 113 22 43", icon: PhoneIcon },
 ]
 
 function classNames(...classes: any[]) {

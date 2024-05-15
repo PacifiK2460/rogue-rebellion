@@ -1,30 +1,21 @@
-// type Product = {
-//     id: number;
-//     name: string;
-//     price: number;
-//     brand: string;
-//     type: string;
-//     subtype: string;
-//     images: string[];
-// };
+// Clear console
+console.clear();
 
-const name = document.getElementsByClassName('headline-5 pb1-sm d-sm-ib')[0].innerText;
-const _price = document.getElementsByClassName('product-price css-11s12ax is--current-price css-tpaepq')[0].innerText;
+const name = document.getElementsByClassName('name___120FN')[0].innerText;
+const _price = document.getElementsByClassName('gl-price-item notranslate')[0].innerText;
 const price = parseFloat(_price.replace('$', '').replace(',', ''));
-const brand = "Nike";
+const brand = "Adidas";
 const type = "Techwear";
-const subtype = "";
-const imageContainer = document.getElementsByClassName('css-r3as8n')[0];
+const subtype = "Pants";
+const imageContainer = document.getElementById('pdp-gallery-desktop-grid-container');
 let images = [];
 imageContainer.childNodes.forEach((child) => {
     try {
-        const labelTag = child.getElementsByTagName('label')[0];
-        const imgTag = labelTag.getElementsByTagName('img')[0];
+        const imgTag = child.getElementsByTagName('img')[0];
         images.push(imgTag.src);
     } catch (e) {
         console.log(e);
         // continue
-
     }
 });
 
