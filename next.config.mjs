@@ -14,13 +14,19 @@ const nextConfig = {
                 hostname: "tailwindui.com",
             },
             {
-                hostname: "static.nike.com",    
+                hostname: "static.nike.com",
             },
             {
                 hostname: "assets.adidas.com"
             },
             {
                 hostname: "img.hollisterco.com"
+            },
+            {
+                hostname: "www.prada.com"
+            },
+            {
+                hostname: "media.gucci.com"
             }
         ]
     }

@@ -47,18 +47,26 @@ function getProductsByParams(params: string[]): [Product[], StoreInfo] | [null, 
             }
             break;
         case "type":
+            console.log("Listing products by type: " + params[1]);
             const _products = products.filter((product) => {
                 return product.type.toLowerCase() === params[1].toLowerCase();
             });
 
+            console.log("Products found: ", ..._products);
+
             const _subtype = params[2];
             if (_subtype === undefined) {
+                Products = _products;
                 break;
             }
+
+            console.log("Listing products by subtype: " + _subtype);
 
             Products = _products.filter((product) => {
                 return product.subtype.toLowerCase() === _subtype.toLowerCase();
             });
+
+            console.log("Products found: ", ...Products);
 
             break;
     }
